@@ -5,18 +5,16 @@
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     </head>
     <body>
-        <div id="app">
-            <a v-bind:href="getChannel('kossiecoder')">유튜브 바로가기</a>
-        </div>
+        <div id="app">{{ reversedMessage }}</div>
         <script>
             new Vue({
                 el: "#app",
                 data: {
-                    link: "https://www.youtube.com/",
+                    message: "안녕하세요",
                 },
-                methods: {
-                    getChannel(channel) {
-                        return this.link + channel;
+                computed: {
+                    reversedMessage() {
+                        return this.message.split("").reverse("").join("");
                     },
                 },
             });
