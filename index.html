@@ -3,36 +3,29 @@
     <head>
         <title>Vue.js Sample</title>
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-        <style>
-            .red {
-                color: red;
-            }
-            .bold {
-                font-weight: bold;
-            }
-        </style>
     </head>
     <body>
         <div id="app">
-            <div class="bold red">Hello</div>
+            <child-component v-on:show-log="printText"></child-component>
         </div>
         <script>
-            new Vue({
-                el: "#app",
-                data: {
-                    message: "홍준혁",
-                    update: "아니요",
-                },
+            Vue.component("child-component", {
+                template: "<button v-on:click='showLog'>show</button>",
                 methods: {
-                    changeMessage() {
-                        this.message = "허새찬";
+                    showLog: function () {
+                        this.$emit("show-log");
                     },
                 },
-                watch: {
-                    message(newVal, oldVal) {
-                        //message를 감시하고 있다가 바뀌면 message를 자동으로 실행
-                        console.log(newVal, oldVal);
-                        this.update = "네";
+            });
+
+            var app = new Vue({
+                el: "#app",
+                data: {
+                    message: "Hello Vue!",
+                },
+                methods: {
+                    printText: function () {
+                        console.log("received event");
                     },
                 },
             });
