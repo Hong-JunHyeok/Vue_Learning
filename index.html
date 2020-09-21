@@ -2,33 +2,33 @@
 <html>
     <head>
         <title>Vue.js Sample</title>
-        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     </head>
     <body>
         <div id="app">
-            <child-component v-on:show-log="printText"></child-component>
+            <h1>Vue 라우터 예제</h1>
+            <router-link to="/main">Main 컴포넌트로 이동</router-link>
+            <router-link to="/login">Login 컴포넌트로 이동</router-link>
+            <hr />
+            <router-view></router-view>
         </div>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/3.4.3/vue-router.min.js"></script>
         <script>
-            Vue.component("child-component", {
-                template: "<button v-on:click='showLog'>show</button>",
-                methods: {
-                    showLog: function () {
-                        this.$emit("show-log");
-                    },
-                },
+            var Main = { template: "<div>main</div>" };
+            var Login = { template: "<div>Login</div>" };
+
+            var routes = [
+                { path: "/main", component: Main },
+                { path: "/login", component: Login },
+            ];
+
+            var router = new VueRouter({
+                routes,
             });
 
             var app = new Vue({
-                el: "#app",
-                data: {
-                    message: "Hello Vue!",
-                },
-                methods: {
-                    printText: function () {
-                        console.log("received event");
-                    },
-                },
-            });
+                router,
+            }).$mount("#app");
         </script>
     </body>
 </html>
