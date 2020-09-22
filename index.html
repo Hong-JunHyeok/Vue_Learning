@@ -2,29 +2,78 @@
 <html>
     <head>
         <title>Vue.js Sample</title>
+        <style>
+            a {
+                border: 1px solid black;
+                background-color: lavender;
+            }
+            div {
+                font-size: 50px;
+                margin: 10px;
+            }
+        </style>
     </head>
     <body>
         <div id="app">
-            <h1>Vue 라우터 예제</h1>
-            <router-link to="/main">Main 컴포넌트로 이동</router-link>
-            <router-link to="/login">Login 컴포넌트로 이동</router-link>
-            <hr />
-            <router-view></router-view>
+            <router-link to="/">기본값으로 이동</router-link>
+            <router-link to="/login">로그인 값으로 이동</router-link>
+            <router-link to="/what?">???</router-link>
+            <router-view name="header"></router-view>
+            <router-view></router-view
+            ><!--명시하지 않을때에는 default-->
+            <router-view name="footer"></router-view>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/3.4.3/vue-router.min.js"></script>
         <script>
-            var Main = { template: "<div>main</div>" };
-            var Login = { template: "<div>Login</div>" };
+            var Header = { template: `<div>This is Header</div>` };
+            var Body = { template: `<div>This is Body</div>` };
+            var Footer = { template: `<div>This is Footer</div>` };
 
-            var routes = [
-                { path: "/main", component: Main },
-                { path: "/login", component: Login },
-            ];
+            var LoginHeader = { template: `<div>This is LoginHeader</div>` };
+            var LoginBody = { template: `<div>This is LoginBody</div>` };
+            var LoginFooter = { template: `<div>This is LoginFooter</div>` };
+
+            var WhatHeader = {
+                template: `<div>현제 코딩 공부에 비중을 둬야할까요 교과공부에 비중을 줘야 할까요?</div>`,
+            };
+            var WhatBody = {
+                template: `<div>웹 개발자가 먹고살기 힘드나요?</div>`,
+            };
+            var WhatFooter = {
+                template: `<div>한 분야만 계속 공부하는건 잘못됬나요?</div>`,
+            };
+            //컴포넌트 내용 정의
 
             var router = new VueRouter({
-                routes,
+                routes: [
+                    {
+                        path: "/",
+                        components: {
+                            default: Body,
+                            header: Header,
+                            footer: Footer,
+                        },
+                    },
+                    {
+                        path: "/login",
+                        components: {
+                            default: LoginBody,
+                            header: LoginHeader,
+                            footer: LoginFooter,
+                        },
+                    },
+                    {
+                        path: "/what",
+                        components: {
+                            default: WhatBody,
+                            header: WhatHeader,
+                            footer: WhatFooter,
+                        },
+                    },
+                ],
             });
+            //routes 작성과 동시에 등록
 
             var app = new Vue({
                 router,
